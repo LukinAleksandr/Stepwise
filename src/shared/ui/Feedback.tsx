@@ -2,8 +2,12 @@ import { Alert } from '@mantine/core'
 import { IconCheck, IconX } from '@tabler/icons-react'
 import type { ReactNode } from 'react'
 
-/** Результат проверки ответа — одинаковый во всех типах заданий. */
-export function Feedback({ correct, children }: { correct: boolean; children?: ReactNode }) {
+interface FeedbackProps {
+  correct: boolean
+  children?: ReactNode
+}
+
+export function Feedback({ correct, children }: FeedbackProps) {
   return (
     <Alert
       role="status"

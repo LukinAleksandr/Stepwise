@@ -1,5 +1,5 @@
-// Доменные обёртки над Mantine. Базовые компоненты (Button, Card, Badge...) импортируются прямо из @mantine/core.
 export { Feedback } from './Feedback'
+export { NotFound } from './NotFound'
 export { PageHeader } from './PageHeader'
 export { RichText } from './RichText'
 export { type RouteTab, RouteTabs } from './RouteTabs'

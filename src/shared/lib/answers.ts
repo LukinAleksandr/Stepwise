@@ -1,4 +1,13 @@
-/** Приводит ответ к сравнимому виду: регистр, пробелы, апострофы, финальная пунктуация. */
+export type GapSegment = { type: 'text'; value: string } | GapToken
+
+export interface GapToken {
+  type: 'gap'
+  answers: string[]
+  index: number
+}
+
+const GAP_PATTERN = /\{([^}]+)\}/g
+
 export function normalizeAnswer(value: string): string {
   return value
     .toLowerCase()
@@ -10,34 +19,31 @@ export function normalizeAnswer(value: string): string {
 }
 
 export function isCorrect(input: string, accepted: string | string[]): boolean {
-  const variants = Array.isArray(accepted) ? accepted : [accepted]
   const normalized = normalizeAnswer(input)
-  return normalized !== '' && variants.some((v) => normalizeAnswer(v) === normalized)
+  return normalized !== '' && toArray(accepted).some((variant) => normalizeAnswer(variant) === normalized)
 }
 
-export type GapSegment = { type: 'text'; value: string } | { type: 'gap'; answers: string[]; index: number }
+export const toArray = <T>(value: T | T[]): T[] => (Array.isArray(value) ? value : [value])
 
-/** "She {is|'s} here" → [text "She ", gap [is, 's], text " here"] */
+export const isGap = (segment: GapSegment): segment is GapToken => segment.type === 'gap'
+
 export function parseGaps(text: string): GapSegment[] {
   const segments: GapSegment[] = []
-  const re = /\{([^}]+)\}/g
-  let last = 0
+  let cursor = 0
   let index = 0
-  for (const match of text.matchAll(re)) {
-    if (match.index > last) segments.push({ type: 'text', value: text.slice(last, match.index) })
-    segments.push({ type: 'gap', answers: match[1].split('|').map((a) => a.trim()), index: index++ })
-    last = match.index + match[0].length
+  for (const { 0: match, 1: body, index: start } of text.matchAll(GAP_PATTERN)) {
+    if (start > cursor) segments.push({ type: 'text', value: text.slice(cursor, start) })
+    segments.push({ type: 'gap', answers: body.split('|').map((answer) => answer.trim()), index: index++ })
+    cursor = start + match.length
   }
-  if (last < text.length) segments.push({ type: 'text', value: text.slice(last) })
+  if (cursor < text.length) segments.push({ type: 'text', value: text.slice(cursor) })
   return segments
 }
 
-/** Предложение с первыми вариантами ответов вместо пропусков. */
 export function fillGaps(segments: GapSegment[]): string {
-  return segments.map((s) => (s.type === 'text' ? s.value : s.answers[0])).join('')
+  return segments.map((segment) => (isGap(segment) ? segment.answers[0] : segment.value)).join('')
 }
 
-/** "Where are you from?" → { words: [Where, are, you, from], ending: "?" } */
 export function splitSentence(sentence: string): { words: string[]; ending: string } {
   const trimmed = sentence.trim()
   const ending = trimmed.match(/[.!?]*$/)?.[0] ?? ''

@@ -1,28 +1,27 @@
 import clsx from 'clsx'
 import type { ReactNode } from 'react'
-import s from './Flashcard.module.css'
+import classes from './Flashcard.module.css'
 
-interface Props {
+interface FlashcardProps {
   front: ReactNode
   back: ReactNode
   flipped: boolean
   onFlip: () => void
 }
 
-/** Двусторонняя карточка с анимацией переворота. Содержимое сторон задаёт родитель. */
-export function Flashcard({ front, back, flipped, onFlip }: Props) {
+export function Flashcard({ front, back, flipped, onFlip }: FlashcardProps) {
   return (
     <button
       type="button"
-      className={clsx(s.scene, flipped && s.flipped)}
+      className={clsx(classes.scene, flipped && classes.flipped)}
       onClick={onFlip}
       aria-label={flipped ? 'Показать лицевую сторону' : 'Показать ответ'}
     >
-      <div className={s.inner}>
-        <div className={s.face} aria-hidden={flipped}>
+      <div className={classes.inner}>
+        <div className={classes.face} aria-hidden={flipped}>
           {front}
         </div>
-        <div className={clsx(s.face, s.back)} aria-hidden={!flipped}>
+        <div className={clsx(classes.face, classes.back)} aria-hidden={!flipped}>
           {back}
         </div>
       </div>

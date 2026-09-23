@@ -1,9 +1,21 @@
 import { ActionIcon, type ActionIconProps } from '@mantine/core'
 import { IconVolume } from '@tabler/icons-react'
+import type { MouseEvent } from 'react'
 import { canSpeak, speak } from '../lib/speech'
 
-export function SpeakButton({ text, size = 'md' }: { text: string; size?: ActionIconProps['size'] }) {
+interface SpeakButtonProps {
+  text: string
+  size?: ActionIconProps['size']
+}
+
+export function SpeakButton({ text, size = 'md' }: SpeakButtonProps) {
   if (!canSpeak) return null
+
+  const handleClick = (event: MouseEvent) => {
+    event.stopPropagation()
+    speak(text)
+  }
+
   return (
     <ActionIcon
       variant="subtle"
@@ -12,10 +24,7 @@ export function SpeakButton({ text, size = 'md' }: { text: string; size?: Action
       size={size}
       aria-label={`Произнести: ${text}`}
       title="Произнести"
-      onClick={(e) => {
-        e.stopPropagation()
-        speak(text)
-      }}
+      onClick={handleClick}
     >
       <IconVolume size="70%" />
     </ActionIcon>

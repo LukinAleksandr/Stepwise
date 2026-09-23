@@ -7,10 +7,11 @@ export function shuffle<T>(items: readonly T[]): T[] {
   return result
 }
 
-/** Перемешивает так, чтобы порядок отличался от исходного (если это возможно). */
+const isSameOrder = <T>(a: readonly T[], b: readonly T[]) => a.every((item, index) => item === b[index])
+
 export function shuffleChanged<T>(items: readonly T[], attempts = 10): T[] {
   let result = shuffle(items)
-  for (let i = 0; i < attempts && items.length > 1 && result.every((x, k) => x === items[k]); i++) {
+  for (let attempt = 0; attempt < attempts && items.length > 1 && isSameOrder(result, items); attempt++) {
     result = shuffle(items)
   }
   return result
