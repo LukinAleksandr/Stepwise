@@ -74,7 +74,7 @@ export const toBe: Topic = {
     { id: 'tired', en: 'tired', ru: 'уставший', transcription: '/ˈtaɪəd/', example: "I'm very tired." },
     { id: 'hungry', en: 'hungry', ru: 'голодный', transcription: '/ˈhʌŋɡri/', example: 'Are you hungry?' },
     { id: 'married', en: 'married', ru: 'женатый, замужем', transcription: '/ˈmærid/', example: "She isn't married." },
-    { id: 'from', en: 'be from', ru: 'быть родом из', example: "I'm from Russia.", exampleRu: 'Я из России.' },
+    { id: 'from', en: 'be from', ru: 'быть родом из', example: "I'm from Canada.", exampleRu: 'Я из Канады.' },
     { id: 'at-home', en: 'at home', ru: 'дома', example: 'They are at home.' },
     { id: 'nice-to-meet', en: 'Nice to meet you.', ru: 'Приятно познакомиться.' },
     { id: 'how-are-you', en: "How are you? — I'm fine, thanks.", ru: 'Как дела? — Хорошо, спасибо.' },
@@ -87,7 +87,7 @@ export const toBe: Topic = {
       items: [
         { kind: 'gap', text: "I {am|'m} a student.", translation: 'Я студент.' },
         { kind: 'gap', text: "My sister {is|'s} a doctor.", translation: 'Моя сестра врач.' },
-        { kind: 'gap', text: "We {are|'re} from Russia.", translation: 'Мы из России.' },
+        { kind: 'gap', text: "We {are|'re} from Canada.", translation: 'Мы из Канады.' },
         { kind: 'gap', text: "It {is|'s} cold today.", translation: 'Сегодня холодно.' },
         { kind: 'gap', text: 'Tom and Anna {are} friends.', translation: 'Том и Анна друзья.' },
         { kind: 'gap', text: 'The book {is} on the table.', translation: 'Книга на столе.' },

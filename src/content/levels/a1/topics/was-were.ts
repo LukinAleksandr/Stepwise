@@ -54,7 +54,7 @@ export const wasWere: Topic = {
     { id: 'last-night', en: 'last night', ru: 'вчера вечером / ночью' },
     { id: 'last-week', en: 'last week', ru: 'на прошлой неделе' },
     { id: 'ago', en: 'ago', ru: 'назад', example: 'two years ago' },
-    { id: 'born', en: 'be born', ru: 'родиться', example: 'I was born in Kazan.' },
+    { id: 'born', en: 'be born', ru: 'родиться', example: 'I was born in Vancouver.' },
     { id: 'party', en: 'party', ru: 'вечеринка' },
     { id: 'great', en: 'great', ru: 'отличный' },
     { id: 'boring', en: 'boring', ru: 'скучный' },
@@ -113,7 +113,7 @@ export const wasWere: Topic = {
           options: ["wasn't", "weren't", "isn't"],
           answer: 0,
         },
-        { kind: 'choice', question: 'I ___ born in Moscow.', options: ['am', 'was', 'were'], answer: 1 },
+        { kind: 'choice', question: 'I ___ born in Toronto.', options: ['am', 'was', 'were'], answer: 1 },
         {
           kind: 'choice',
           question: 'My friends ___ at the cafe two hours ago.',

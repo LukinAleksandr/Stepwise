@@ -66,7 +66,7 @@ export const pronouns: Topic = {
       en: 'parents',
       ru: 'родители',
       transcription: '/ˈpeərənts/',
-      example: 'My parents live in Kazan.',
+      example: 'My parents live in Vancouver.',
     },
     { id: 'children', en: 'children', ru: 'дети', transcription: '/ˈtʃɪldrən/', example: 'They have two children.' },
     { id: 'grandmother', en: 'grandmother', ru: 'бабушка', transcription: '/ˈɡrænmʌðə/' },
@@ -94,9 +94,9 @@ export const pronouns: Topic = {
         },
         {
           kind: 'gap',
-          text: 'We live in Moscow. {Our} flat is small.',
+          text: 'We live in Toronto. {Our} flat is small.',
           hint: 'we',
-          translation: 'Мы живём в Москве. Наша квартира маленькая.',
+          translation: 'Мы живём в Торонто. Наша квартира маленькая.',
         },
         {
           kind: 'gap',

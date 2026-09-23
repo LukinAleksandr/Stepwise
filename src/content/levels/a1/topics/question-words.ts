@@ -68,7 +68,7 @@ export const questionWords: Topic = {
       id: 'gaps',
       title: 'Вставьте вопросительное слово',
       items: [
-        { kind: 'gap', text: '{Where} do you live? — In Moscow.', translation: 'Где ты живёшь? — В Москве.' },
+        { kind: 'gap', text: '{Where} do you live? — In Toronto.', translation: 'Где ты живёшь? — В Торонто.' },
         {
           kind: 'gap',
           text: '{When} is your birthday? — In April.',

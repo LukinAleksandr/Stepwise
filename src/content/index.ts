@@ -6,7 +6,6 @@ import { verbs as verbList } from './verbs'
 
 export type * from './types'
 
-/** Реестр уровней. Новый уровень = новый файл в levels/ + строчка здесь. */
 export const levels: Level[] = [a1, a2, b1]
 export const verbs: Verb[] = verbList
 
@@ -18,8 +17,6 @@ export function getTopic(levelId: string, topicId: string): Topic | undefined {
   return getLevel(levelId)?.topics.find((t) => t.id === topicId)
 }
 
-// ---------- Ключи прогресса ----------
-
 export const cardKey = (levelId: string, topicId: string, cardId: string) => `card:${levelId}/${topicId}/${cardId}`
 
 export const exerciseKey = (levelId: string, topicId: string, setId: string) =>
@@ -27,7 +24,6 @@ export const exerciseKey = (levelId: string, topicId: string, setId: string) =>
 
 export const verbKey = (verb: Verb) => `verb:${verb.base}`
 
-/** Карточка с глобально уникальным ключом для хранения прогресса. */
 export interface CardRef extends Card {
   key: string
 }

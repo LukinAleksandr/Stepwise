@@ -26,7 +26,7 @@ export const prepositions: Topic = {
       type: 'table',
       headers: ['Предлог', 'Значение', 'Примеры'],
       rows: [
-        ['**in**', 'внутри', 'in the box, in the room, in London, in Russia'],
+        ['**in**', 'внутри', 'in the box, in the room, in London, in Canada'],
         ['**on**', 'на поверхности', 'on the table, on the wall, on the floor'],
         ['**at**', 'в точке, у места, на мероприятии', 'at the bus stop, at home, at work, at school, at a party'],
       ],
@@ -35,7 +35,7 @@ export const prepositions: Topic = {
       type: 'examples',
       items: [
         { en: 'The keys are on the table.', ru: 'Ключи на столе.' },
-        { en: 'My parents live in Moscow.', ru: 'Мои родители живут в Москве.' },
+        { en: 'My parents live in Montreal.', ru: 'Мои родители живут в Монреале.' },
         { en: "I'm at work now.", ru: 'Я сейчас на работе.' },
       ],
     },
@@ -88,7 +88,7 @@ export const prepositions: Topic = {
       title: 'Предлоги места',
       items: [
         { kind: 'gap', text: 'The keys are {on} the table.', translation: 'Ключи на столе.' },
-        { kind: 'gap', text: 'My parents live {in} Moscow.', translation: 'Мои родители живут в Москве.' },
+        { kind: 'gap', text: 'My parents live {in} Montreal.', translation: 'Мои родители живут в Монреале.' },
         { kind: 'gap', text: 'Wait for me {at} the bus stop.', translation: 'Жди меня на остановке.' },
         { kind: 'gap', text: 'The milk is {in} the fridge.', translation: 'Молоко в холодильнике.' },
         { kind: 'gap', text: 'There is a picture {on} the wall.', translation: 'На стене картина.' },
