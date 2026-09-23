@@ -6,9 +6,8 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Одновременно идёт только один деплой; незавершённый не прерываем
 concurrency:
-  group: pages-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -21,17 +20,16 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Lint & format (Biome)
-        run: npx biome ci
-      - name: Typecheck & build
-        run: npm run build
+      - run: npx biome ci
+      - run: npm run check:boundaries
+      - run: npm run check:content
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'
         with:
           path: dist
 
   deploy:
-    # Публикуем только из main, PR лишь проверяются
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
