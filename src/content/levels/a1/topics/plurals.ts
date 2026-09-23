@@ -1,0 +1,151 @@
+import type { Topic } from '../../../types'
+
+export const plurals: Topic = {
+  id: 'plurals',
+  title: 'Множественное число',
+  summary: 'book → books, city → cities, child → children',
+  theory: [
+    { type: 'rule', text: 'Обычно добавляем **-s**: book → book**s**, cat → cat**s**.' },
+    {
+      type: 'table',
+      headers: ['Слово оканчивается на', 'Правило', 'Примеры'],
+      rows: [
+        [
+          '-s, -ss, -sh, -ch, -x, -o',
+          '+ **es**',
+          'bus → buses, dress → dresses, box → boxes, watch → watches, tomato → tomatoes',
+        ],
+        ['согласная + y', 'y → **ies**', 'city → cities, baby → babies'],
+        ['гласная + y', '+ **s**', 'boy → boys, day → days'],
+        ['-f / -fe', '→ **ves**', 'knife → knives, wife → wives, leaf → leaves'],
+      ],
+    },
+    { type: 'heading', text: 'Исключения — их нужно запомнить' },
+    {
+      type: 'table',
+      headers: ['Единственное', 'Множественное', 'Перевод'],
+      rows: [
+        ['man', 'men', 'мужчина — мужчины'],
+        ['woman', 'women', 'женщина — женщины'],
+        ['child', 'children', 'ребёнок — дети'],
+        ['person', 'people', 'человек — люди'],
+        ['foot', 'feet', 'ступня — ступни'],
+        ['tooth', 'teeth', 'зуб — зубы'],
+        ['mouse', 'mice', 'мышь — мыши'],
+        ['fish', 'fish', 'рыба — рыбы'],
+        ['sheep', 'sheep', 'овца — овцы'],
+      ],
+    },
+    { type: 'note', tone: 'tip', text: '**people** — всегда множественное число: People **are** nice.' },
+    {
+      type: 'note',
+      tone: 'warning',
+      text: 'После любого числа больше одного — множественное число: two book**s**, 25 year**s**, 1.5 hour**s**.',
+    },
+    {
+      type: 'paragraph',
+      text: '**Неисчисляемые** существительные (water, money, information, bread, advice, music) не имеют множественного числа и не употребляются с a / an.',
+    },
+  ],
+  cards: [
+    { id: 'man', en: 'man → men', ru: 'мужчина → мужчины' },
+    { id: 'woman', en: 'woman → women', ru: 'женщина → женщины', transcription: '/ˈwʊmən/ → /ˈwɪmɪn/' },
+    { id: 'child', en: 'child → children', ru: 'ребёнок → дети' },
+    { id: 'person', en: 'person → people', ru: 'человек → люди' },
+    { id: 'foot', en: 'foot → feet', ru: 'ступня → ступни' },
+    { id: 'tooth', en: 'tooth → teeth', ru: 'зуб → зубы' },
+    { id: 'mouse', en: 'mouse → mice', ru: 'мышь → мыши' },
+    { id: 'fish', en: 'fish → fish', ru: 'рыба → рыбы' },
+    { id: 'sheep', en: 'sheep → sheep', ru: 'овца → овцы' },
+    { id: 'knife', en: 'knife → knives', ru: 'нож → ножи' },
+    { id: 'city', en: 'city → cities', ru: 'город → города' },
+    { id: 'box', en: 'box → boxes', ru: 'коробка → коробки' },
+  ],
+  exercises: [
+    {
+      id: 'gaps',
+      title: 'Поставьте во множественное число',
+      items: [
+        { kind: 'gap', text: 'I have two {sisters}.', hint: 'sister', translation: 'У меня две сестры.' },
+        {
+          kind: 'gap',
+          text: 'There are three {boxes} on the table.',
+          hint: 'box',
+          translation: 'На столе три коробки.',
+        },
+        { kind: 'gap', text: 'She has two {children}.', hint: 'child', translation: 'У неё двое детей.' },
+        { kind: 'gap', text: 'Many {people} live here.', hint: 'person', translation: 'Здесь живёт много людей.' },
+        { kind: 'gap', text: 'My {feet} are cold.', hint: 'foot', translation: 'У меня замёрзли ноги.' },
+        { kind: 'gap', text: 'Brush your {teeth}!', hint: 'tooth', translation: 'Почисти зубы!' },
+        {
+          kind: 'gap',
+          text: 'London and Paris are big {cities}.',
+          hint: 'city',
+          translation: 'Лондон и Париж — большие города.',
+        },
+        { kind: 'gap', text: 'These {knives} are sharp.', hint: 'knife', translation: 'Эти ножи острые.' },
+        { kind: 'gap', text: 'The {women} are talking.', hint: 'woman', translation: 'Женщины разговаривают.' },
+        {
+          kind: 'gap',
+          text: 'Two {boys} and three {girls}.',
+          hint: 'boy, girl',
+          translation: 'Два мальчика и три девочки.',
+        },
+      ],
+    },
+    {
+      id: 'choice',
+      title: 'Выберите правильную форму',
+      items: [
+        { kind: 'choice', question: 'one baby — two ___', options: ['babys', 'babies', 'babyes'], answer: 1 },
+        { kind: 'choice', question: 'one man — three ___', options: ['mans', 'men', 'mens'], answer: 1 },
+        {
+          kind: 'choice',
+          question: 'one day — two ___',
+          options: ['daies', 'days', 'dayes'],
+          answer: 1,
+          explanation: 'Перед y гласная — просто **+s**.',
+        },
+        { kind: 'choice', question: 'one fish — two ___', options: ['fishs', 'fish', 'fishen'], answer: 1 },
+        { kind: 'choice', question: 'one potato — two ___', options: ['potatos', 'potatoes', 'potatoies'], answer: 1 },
+        {
+          kind: 'choice',
+          question: 'I need some ___.',
+          options: ['informations', 'information'],
+          answer: 1,
+          explanation: '**information** — неисчисляемое, множественного числа нет.',
+        },
+      ],
+    },
+    {
+      id: 'order',
+      title: 'Соберите предложение',
+      items: [
+        {
+          kind: 'order',
+          answer: 'The children are in the garden.',
+          translation: 'Дети в саду.',
+          distractors: ['childs'],
+        },
+        {
+          kind: 'order',
+          answer: 'These women are my friends.',
+          translation: 'Эти женщины — мои подруги.',
+          distractors: ['woman'],
+        },
+        {
+          kind: 'order',
+          answer: 'I have two cats and a dog.',
+          translation: 'У меня две кошки и собака.',
+          distractors: ['cat'],
+        },
+        {
+          kind: 'order',
+          answer: 'People are very friendly here.',
+          translation: 'Люди здесь очень дружелюбные.',
+          distractors: ['is'],
+        },
+      ],
+    },
+  ],
+}

@@ -1,0 +1,171 @@
+import type { Topic } from '../../../types'
+
+export const pronouns: Topic = {
+  id: 'pronouns',
+  title: 'Местоимения',
+  summary: 'I / me / my — личные, объектные и притяжательные',
+  theory: [
+    {
+      type: 'paragraph',
+      text: 'В английском у каждого местоимения три основные формы: **подлежащее** (кто делает), **объект** (кого / кому) и **притяжательная** (чей).',
+    },
+    {
+      type: 'table',
+      headers: ['Подлежащее', 'Объект', 'Притяжательное', 'Перевод'],
+      rows: [
+        ['I', 'me', 'my', 'я — меня / мне — мой'],
+        ['you', 'you', 'your', 'ты, вы — тебя, вас — твой, ваш'],
+        ['he', 'him', 'his', 'он — его / ему — его'],
+        ['she', 'her', 'her', 'она — её / ей — её'],
+        ['it', 'it', 'its', 'оно (предмет, животное) — его — его'],
+        ['we', 'us', 'our', 'мы — нас / нам — наш'],
+        ['they', 'them', 'their', 'они — их / им — их'],
+      ],
+    },
+    {
+      type: 'rule',
+      title: 'Подлежащее и объект',
+      text: 'Подлежащее стоит **перед глаголом**: **She** likes tea. Объект — **после глагола или предлога**: I know **her**. Look at **them**.',
+    },
+    {
+      type: 'rule',
+      title: 'Притяжательные',
+      text: 'Стоят **перед существительным**, артикль при этом не нужен: **my** car (не the my car).',
+    },
+    {
+      type: 'examples',
+      items: [
+        { en: 'This is my brother. His name is Tom.', ru: 'Это мой брат. Его зовут Том.' },
+        { en: 'I like Anna. I often call her.', ru: 'Мне нравится Анна. Я часто ей звоню.' },
+        { en: 'Can you help us?', ru: 'Можешь нам помочь?' },
+        { en: 'They love their dog.', ru: 'Они любят свою собаку.' },
+      ],
+    },
+    {
+      type: 'note',
+      tone: 'warning',
+      text: '**its** — притяжательное («его» для предмета или животного), **it’s** = it is. The dog is eating **its** food.',
+    },
+    {
+      type: 'note',
+      tone: 'tip',
+      text: '**you** — это и «ты», и «вы». Отдельной вежливой формы нет.',
+    },
+  ],
+  cards: [
+    { id: 'mother', en: 'mother', ru: 'мать', transcription: '/ˈmʌðə/', example: 'My mother is a nurse.' },
+    { id: 'father', en: 'father', ru: 'отец', transcription: '/ˈfɑːðə/', example: 'His father is tall.' },
+    { id: 'brother', en: 'brother', ru: 'брат', transcription: '/ˈbrʌðə/', example: 'I have got a brother.' },
+    { id: 'sister', en: 'sister', ru: 'сестра', transcription: '/ˈsɪstə/', example: 'Her sister is 10.' },
+    { id: 'son', en: 'son', ru: 'сын', transcription: '/sʌn/', example: 'Their son is a student.' },
+    { id: 'daughter', en: 'daughter', ru: 'дочь', transcription: '/ˈdɔːtə/', example: 'Our daughter lives in Paris.' },
+    { id: 'husband', en: 'husband', ru: 'муж', transcription: '/ˈhʌzbənd/', example: 'Her husband is a pilot.' },
+    { id: 'wife', en: 'wife', ru: 'жена', transcription: '/waɪf/', example: 'This is my wife, Kate.' },
+    {
+      id: 'parents',
+      en: 'parents',
+      ru: 'родители',
+      transcription: '/ˈpeərənts/',
+      example: 'My parents live in Kazan.',
+    },
+    { id: 'children', en: 'children', ru: 'дети', transcription: '/ˈtʃɪldrən/', example: 'They have two children.' },
+    { id: 'grandmother', en: 'grandmother', ru: 'бабушка', transcription: '/ˈɡrænmʌðə/' },
+    { id: 'grandfather', en: 'grandfather', ru: 'дедушка', transcription: '/ˈɡrænfɑːðə/' },
+    { id: 'friend', en: 'friend', ru: 'друг, подруга', transcription: '/frend/', example: 'She is my best friend.' },
+    { id: 'family', en: 'family', ru: 'семья', transcription: '/ˈfæməli/', example: 'Our family is big.' },
+  ],
+  exercises: [
+    {
+      id: 'gaps',
+      title: 'Вставьте местоимение',
+      instruction: 'В скобках — подсказка: какое местоимение нужно поставить в правильную форму.',
+      items: [
+        {
+          kind: 'gap',
+          text: 'This is my brother. {His} name is Tom.',
+          hint: 'he',
+          translation: 'Это мой брат. Его зовут Том.',
+        },
+        {
+          kind: 'gap',
+          text: 'I like Anna. I often call {her}.',
+          hint: 'she',
+          translation: 'Мне нравится Анна. Я часто ей звоню.',
+        },
+        {
+          kind: 'gap',
+          text: 'We live in Moscow. {Our} flat is small.',
+          hint: 'we',
+          translation: 'Мы живём в Москве. Наша квартира маленькая.',
+        },
+        {
+          kind: 'gap',
+          text: "Where are the keys? I can't find {them}.",
+          hint: 'they',
+          translation: 'Где ключи? Я не могу их найти.',
+        },
+        { kind: 'gap', text: 'Can you help {me}, please?', hint: 'I', translation: 'Можешь мне помочь, пожалуйста?' },
+        { kind: 'gap', text: 'They love {their} dog.', hint: 'they', translation: 'Они любят свою собаку.' },
+        {
+          kind: 'gap',
+          text: 'The cat is hungry. Give {it} some milk.',
+          hint: 'it',
+          translation: 'Кошка голодная. Дай ей молока.',
+        },
+        { kind: 'gap', text: 'Is this {your} bag?', hint: 'you', translation: 'Это твоя сумка?' },
+        { kind: 'gap', text: 'Tell {us} about your trip.', hint: 'we', translation: 'Расскажи нам о своей поездке.' },
+        { kind: 'gap', text: '{Her} students like {her}.', hint: 'she', translation: 'Её ученики любят её.' },
+      ],
+    },
+    {
+      id: 'order',
+      title: 'Соберите предложение',
+      items: [
+        { kind: 'order', answer: 'This is my sister.', translation: 'Это моя сестра.', distractors: ['me'] },
+        { kind: 'order', answer: 'Do you know him?', translation: 'Ты его знаешь?', distractors: ['his'] },
+        {
+          kind: 'order',
+          answer: 'Their house is very big.',
+          translation: 'Их дом очень большой.',
+          distractors: ['They'],
+        },
+        {
+          kind: 'order',
+          answer: 'Please call me tomorrow.',
+          translation: 'Пожалуйста, позвони мне завтра.',
+          distractors: ['my'],
+        },
+        { kind: 'order', answer: 'What is your name?', translation: 'Как тебя зовут?', distractors: ['you'] },
+      ],
+    },
+    {
+      id: 'choice',
+      title: 'Выберите правильный вариант',
+      items: [
+        { kind: 'choice', question: '___ name is Peter.', options: ['He', 'Him', 'His'], answer: 2 },
+        {
+          kind: 'choice',
+          question: 'I love ___.',
+          options: ['they', 'them', 'their'],
+          answer: 1,
+          explanation: 'После глагола нужна объектная форма: **them**.',
+        },
+        {
+          kind: 'choice',
+          question: 'The dog is eating ___ food.',
+          options: ["it's", 'its', 'it'],
+          answer: 1,
+          explanation: '**its** — притяжательное, **it’s** = it is.',
+        },
+        { kind: 'choice', question: 'Look at ___!', options: ['we', 'our', 'us'], answer: 2 },
+        { kind: 'choice', question: '___ are my friends.', options: ['Them', 'They', 'Their'], answer: 1 },
+        {
+          kind: 'choice',
+          question: "Where is ___ car? — It's over there.",
+          options: ['you', 'your', "you're"],
+          answer: 1,
+        },
+      ],
+    },
+  ],
+}
