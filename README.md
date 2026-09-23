@@ -19,6 +19,8 @@ npm run check:fix  # то же, с автоисправлением
 
 Каждый push в `main` через GitHub Actions (`.github/workflows/ci.yml`) проверяет код (Biome, TypeScript), собирает проект и публикует его на GitHub Pages. Pull request'ы только проверяются.
 
+Зависимости обновляет Dependabot (`.github/dependabot.yml`): раз в месяц по одному PR для npm и для GitHub Actions, уязвимости — сразу. В `main` можно смёрджить только PR с зелёной проверкой CI.
+
 ## Стек
 
 | Библиотека | Зачем |
