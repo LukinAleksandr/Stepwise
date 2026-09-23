@@ -6,13 +6,47 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Одновременно идёт только один деплой; незавершённый не прерываем
 concurrency:
-  group: pages-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  version:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    outputs:
+      version: ${{ steps.next.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Resolve next version from merged branch
+        id: next
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch=""
+          for attempt in 1 2 3; do
+            branch=$(gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" --jq '.[0].head.ref // ""')
+            [ -n "$branch" ] && break
+            sleep 5
+          done
+          current=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || echo v0.0.0)
+          node scripts/next-version.mjs "$branch" "$current" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Tag and publish release
+        if: steps.next.outputs.type != 'none'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "v${{ steps.next.outputs.version }}" --target "${{ github.sha }}" --generate-notes
+
   build:
+    needs: version
+    if: ${{ !cancelled() && !failure() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -21,18 +55,19 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Lint & format (Biome)
-        run: npx biome ci
-      - name: Typecheck & build
-        run: npm run build
+      - run: npx biome ci
+      - run: npm run check:boundaries
+      - run: npm run check:content
+      - run: npm run build
+        env:
+          APP_VERSION: ${{ needs.version.outputs.version }}
       - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'
         with:
           path: dist
 
   deploy:
-    # Публикуем только из main, PR лишь проверяются
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: ${{ !cancelled() && !failure() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     needs: build
     runs-on: ubuntu-latest
     permissions:

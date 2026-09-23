@@ -1,86 +1,43 @@
-import {
-  Button,
-  EmptyState,
-  Group,
-  Kbd,
-  Progress,
-  SegmentedControl,
-  SimpleGrid,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core'
+import { Button, EmptyState, Group, Kbd, Progress, SegmentedControl, SimpleGrid, Stack, Text } from '@mantine/core'
 import { IconCards, IconConfetti } from '@tabler/icons-react'
-import { useCallback, useEffect, useState } from 'react'
 import type { CardRef } from '../../content'
-import { buildQueue, type Grade } from '../../shared/lib/srs'
 import { SpeakButton } from '../../shared/ui'
-import { useProgress } from '../../store/progress'
+import { CardExample, EnglishFace, TranslationFace } from './CardFace'
 import { Flashcard } from './Flashcard'
+import { GRADE_OPTIONS } from './grades'
+import { useFlashcardHotkeys } from './hooks/useFlashcardHotkeys'
+import { type Direction, useFlashcardSession } from './hooks/useFlashcardSession'
 
-type Direction = 'en-ru' | 'ru-en'
+const DIRECTION_OPTIONS = [
+  { value: 'en-ru', label: 'EN → RU' },
+  { value: 'ru-en', label: 'RU → EN' },
+]
 
-interface Props {
-  cards: CardRef[]
-  /** Сколько новых карточек добавить в сессию */
+interface FlashcardSessionProps {
+  cards: readonly CardRef[]
   newLimit?: number
 }
 
-const GRADES: { grade: Grade; label: string; color: string; key: string }[] = [
-  { grade: 'again', label: 'Не помню', color: 'red', key: '1' },
-  { grade: 'good', label: 'Помню', color: 'indigo', key: '2' },
-  { grade: 'easy', label: 'Легко', color: 'teal', key: '3' },
-]
+export function FlashcardSession({ cards, newLimit }: FlashcardSessionProps) {
+  const {
+    card,
+    position,
+    total,
+    isEmpty,
+    flipped,
+    direction,
+    remembered,
+    forgotten,
+    flip,
+    reveal,
+    rate,
+    changeDirection,
+    restart,
+  } = useFlashcardSession(cards, newLimit)
 
-/** Сессия повторения карточек по интервальной системе. Работает с любым набором карточек. */
-export function FlashcardSession({ cards, newLimit = 10 }: Props) {
-  const review = useProgress((s) => s.review)
-  const makeQueue = useCallback(() => buildQueue(cards, useProgress.getState().srs, { newLimit }), [cards, newLimit])
+  useFlashcardHotkeys({ enabled: card !== undefined, flipped, onFlip: flip, onRate: rate })
 
-  const [queue, setQueue] = useState(makeQueue)
-  const [position, setPosition] = useState(0)
-  const [flipped, setFlipped] = useState(false)
-  const [direction, setDirection] = useState<Direction>('en-ru')
-  const [stats, setStats] = useState({ again: 0, good: 0, easy: 0 })
-
-  const card = queue[position] as CardRef | undefined
-
-  const grade = useCallback(
-    (g: Grade) => {
-      if (!card) return
-      review(card.key, g)
-      setStats((s) => ({ ...s, [g]: s[g] + 1 }))
-      // Забытую карточку показываем ещё раз в конце сессии
-      if (g === 'again') setQueue((q) => [...q, card])
-      setPosition((p) => p + 1)
-      setFlipped(false)
-    },
-    [card, review],
-  )
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (!card || e.target instanceof HTMLInputElement) return
-      if (e.code === 'Space') {
-        e.preventDefault()
-        setFlipped((f) => !f)
-      } else if (flipped) {
-        const match = GRADES.find((g) => g.key === e.key)
-        if (match) grade(match.grade)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [card, flipped, grade])
-
-  const restart = () => {
-    setQueue(makeQueue())
-    setPosition(0)
-    setFlipped(false)
-    setStats({ again: 0, good: 0, easy: 0 })
-  }
-
-  if (queue.length === 0) {
+  if (isEmpty) {
     return (
       <EmptyState
         icon={<IconCards />}
@@ -95,7 +52,7 @@ export function FlashcardSession({ cards, newLimit = 10 }: Props) {
       <EmptyState
         icon={<IconConfetti />}
         title="Сессия завершена"
-        description={`Помню: ${stats.good + stats.easy} · Не помню: ${stats.again}`}
+        description={`Помню: ${remembered} · Не помню: ${forgotten}`}
       >
         <EmptyState.Actions>
           <Button onClick={restart}>Продолжить</Button>
@@ -104,24 +61,7 @@ export function FlashcardSession({ cards, newLimit = 10 }: Props) {
     )
   }
 
-  const english = (
-    <>
-      <Title order={2}>{card.en}</Title>
-      {card.transcription && <Text c="dimmed">{card.transcription}</Text>}
-    </>
-  )
-  const russian = <Title order={2}>{card.ru}</Title>
-  const example = card.example && (
-    <Text size="sm" c="dimmed" fs="italic">
-      {card.example}
-      {card.exampleRu && (
-        <>
-          <br />
-          {card.exampleRu}
-        </>
-      )}
-    </Text>
-  )
+  const isEnglishFirst = direction === 'en-ru'
 
   return (
     <Stack maw={560} w="100%" mx="auto">
@@ -129,29 +69,23 @@ export function FlashcardSession({ cards, newLimit = 10 }: Props) {
         <SegmentedControl
           size="xs"
           value={direction}
-          onChange={(v) => {
-            setDirection(v as Direction)
-            setFlipped(false)
-          }}
-          data={[
-            { value: 'en-ru', label: 'EN → RU' },
-            { value: 'ru-en', label: 'RU → EN' },
-          ]}
+          onChange={(value) => changeDirection(value as Direction)}
+          data={DIRECTION_OPTIONS}
         />
         <Text size="sm" c="dimmed">
-          {position + 1} / {queue.length}
+          {position + 1} / {total}
         </Text>
       </Group>
-      <Progress value={(position / queue.length) * 100} size="sm" />
+      <Progress value={(position / total) * 100} size="sm" />
 
       <Flashcard
         flipped={flipped}
-        onFlip={() => setFlipped((f) => !f)}
-        front={direction === 'en-ru' ? english : russian}
+        onFlip={flip}
+        front={isEnglishFirst ? <EnglishFace card={card} /> : <TranslationFace card={card} />}
         back={
           <>
-            {direction === 'en-ru' ? russian : english}
-            {example}
+            {isEnglishFirst ? <TranslationFace card={card} /> : <EnglishFace card={card} />}
+            <CardExample card={card} />
           </>
         }
       />
@@ -162,14 +96,14 @@ export function FlashcardSession({ cards, newLimit = 10 }: Props) {
 
       {flipped ? (
         <SimpleGrid cols={3} spacing="xs">
-          {GRADES.map((g) => (
-            <Button key={g.grade} variant="light" color={g.color} onClick={() => grade(g.grade)}>
-              {g.label}
+          {GRADE_OPTIONS.map(({ grade, label, color }) => (
+            <Button key={grade} variant="light" color={color} onClick={() => rate(grade)}>
+              {label}
             </Button>
           ))}
         </SimpleGrid>
       ) : (
-        <Button onClick={() => setFlipped(true)}>Показать ответ</Button>
+        <Button onClick={reveal}>Показать ответ</Button>
       )}
 
       <Text size="xs" c="dimmed" ta="center" visibleFrom="sm">

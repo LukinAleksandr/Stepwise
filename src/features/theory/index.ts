@@ -1,0 +1,1 @@
+export { TheoryView } from './TheoryView'

@@ -1,6 +1,5 @@
 import type { Verb } from './types'
 
-// Неправильные глаголы. Уровень — когда глагол обычно встречается впервые.
 export const verbs: Verb[] = [
   { base: 'be', past: 'was/were', participle: 'been', ru: 'быть', level: 'A1' },
   { base: 'have', past: 'had', participle: 'had', ru: 'иметь', level: 'A1' },

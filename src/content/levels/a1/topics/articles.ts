@@ -44,7 +44,7 @@ export const articles: Topic = {
         'множественное число в общем смысле: I like **cats**.',
         'неисчисляемые в общем смысле: I drink **water**.',
         'если уже есть my / your / this / that: **my** book',
-        'имена, большинство городов и стран: **Anna**, **London**, **Russia**',
+        'имена, большинство городов и стран: **Anna**, **London**, **Canada**',
         'устойчивые выражения: at home, at work, go to bed, have breakfast',
       ],
     },

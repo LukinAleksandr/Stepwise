@@ -2,14 +2,14 @@ import { Anchor, Group, Stack, Text, Title } from '@mantine/core'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 
-interface Props {
+interface PageHeaderProps {
   title: ReactNode
   subtitle?: ReactNode
   back?: { to: string; label: string }
   actions?: ReactNode
 }
 
-export function PageHeader({ title, subtitle, back, actions }: Props) {
+export function PageHeader({ title, subtitle, back, actions }: PageHeaderProps) {
   return (
     <Stack gap={6} mb="xl">
       {back && (

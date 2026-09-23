@@ -1,52 +1,57 @@
 import { Badge, Table, Text } from '@mantine/core'
 import type { CardRef } from '../../content'
-import { type CardStatus, cardStatus } from '../../shared/lib/srs'
+import { type CardStatus, cardStatus, useSrsStates } from '../../shared/srs'
 import { SpeakButton } from '../../shared/ui'
-import { useProgress } from '../../store/progress'
 
-const STATUS: Record<CardStatus, { label: string; color: string }> = {
+const STATUS_BADGE: Record<CardStatus, { label: string; color: string }> = {
   new: { label: 'Новое', color: 'gray' },
   learning: { label: 'Изучаю', color: 'orange' },
   learned: { label: 'Выучено', color: 'teal' },
 }
 
-/** Таблица слов темы со статусом изучения. */
-export function WordList({ cards }: { cards: CardRef[] }) {
-  const srs = useProgress((s) => s.srs)
+function WordRow({ card, status }: { card: CardRef; status: CardStatus }) {
+  const { en, ru, transcription, example } = card
+  const { label, color } = STATUS_BADGE[status]
+
+  return (
+    <Table.Tr>
+      <Table.Td w={40}>
+        <SpeakButton text={en} size="sm" />
+      </Table.Td>
+      <Table.Td>
+        <Text fw={600}>{en}</Text>
+        {transcription && (
+          <Text size="xs" c="dimmed">
+            {transcription}
+          </Text>
+        )}
+      </Table.Td>
+      <Table.Td>
+        <Text>{ru}</Text>
+        {example && (
+          <Text size="xs" c="dimmed" fs="italic">
+            {example}
+          </Text>
+        )}
+      </Table.Td>
+      <Table.Td ta="right">
+        <Badge variant="light" color={color} miw="max-content">
+          {label}
+        </Badge>
+      </Table.Td>
+    </Table.Tr>
+  )
+}
+
+export function WordList({ cards }: { cards: readonly CardRef[] }) {
+  const states = useSrsStates()
+
   return (
     <Table verticalSpacing="sm" highlightOnHover>
       <Table.Tbody>
-        {cards.map((card) => {
-          const status = STATUS[cardStatus(srs[card.key])]
-          return (
-            <Table.Tr key={card.key}>
-              <Table.Td w={40}>
-                <SpeakButton text={card.en} size="sm" />
-              </Table.Td>
-              <Table.Td>
-                <Text fw={600}>{card.en}</Text>
-                {card.transcription && (
-                  <Text size="xs" c="dimmed">
-                    {card.transcription}
-                  </Text>
-                )}
-              </Table.Td>
-              <Table.Td>
-                <Text>{card.ru}</Text>
-                {card.example && (
-                  <Text size="xs" c="dimmed" fs="italic">
-                    {card.example}
-                  </Text>
-                )}
-              </Table.Td>
-              <Table.Td ta="right">
-                <Badge variant="light" color={status.color} miw="max-content">
-                  {status.label}
-                </Badge>
-              </Table.Td>
-            </Table.Tr>
-          )
-        })}
+        {cards.map((card) => (
+          <WordRow key={card.key} card={card} status={cardStatus(states[card.key])} />
+        ))}
       </Table.Tbody>
     </Table>
   )

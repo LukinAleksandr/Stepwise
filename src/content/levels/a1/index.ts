@@ -21,7 +21,6 @@ export const a1: Level = {
   code: 'A1',
   title: 'Beginner',
   description: 'Основы: to be, местоимения, артикли, Present Simple и Continuous, can, was / were.',
-  // Порядок тем = рекомендуемый порядок изучения
   topics: [
     toBe,
     pronouns,

@@ -10,8 +10,10 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "format": "biome format --write",
-    "check": "biome check",
-    "check:fix": "biome check --write"
+    "check": "biome check && tsc -b && npm run check:boundaries && npm run check:content",
+    "check:fix": "biome check --write",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
     "@mantine/core": "^9.6.2",
@@ -32,6 +34,7 @@
     "postcss": "^8.5.28",
     "postcss-preset-mantine": "^1.18.0",
     "postcss-simple-vars": "^7.0.1",
+    "tsx": "4.23.15",
     "typescript": "~7.0.2",
     "vite": "^8.3.0"
   }

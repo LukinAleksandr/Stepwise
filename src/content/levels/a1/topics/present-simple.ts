@@ -70,7 +70,7 @@ export const presentSimple: Topic = {
       title: 'Поставьте глагол в нужную форму',
       items: [
         { kind: 'gap', text: 'I {work} in a bank.', hint: 'work', translation: 'Я работаю в банке.' },
-        { kind: 'gap', text: 'My sister {lives} in Kazan.', hint: 'live', translation: 'Моя сестра живёт в Казани.' },
+        { kind: 'gap', text: 'My sister {lives} in Ottawa.', hint: 'live', translation: 'Моя сестра живёт в Оттаве.' },
         {
           kind: 'gap',
           text: 'He {watches} TV every evening.',
